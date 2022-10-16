@@ -1,3 +1,3 @@
 # quant-finance
 
-A repo with useful code and notes on quantitative finance models.
+Useful code snippets and notes on models for quantitative finance.
