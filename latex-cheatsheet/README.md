@@ -5,5 +5,4 @@ I copied the latex template from an existing repo ([link](https://github.com/ken
 
 ![page 1](https://raw.githubusercontent.com/mauhcs/quant-finance/main/latex-cheatsheet/img/cheatsheet.png)
 
-
-
+![page 2](https://raw.githubusercontent.com/mauhcs/quant-finance/main/latex-cheatsheet/img/cheatsheet2.png)
