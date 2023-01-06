@@ -1,0 +1,91 @@
+\section{Time series Intro}
+
+\subsection{Definitions}
+
+\textbf{Generalized Random Walk:}
+$r_t = \mu + \sigma z_t$, $r_t = log(P_t / P_{t-1})$, $P_t = P_0 e^{r_0 + \ldots + r_t}$
+
+\textbf{$MA(q)$:} $R_t = c_0 + \sigma_t + \phi_1 z_{t-1} + \ldots + \phi_{q} z_{t-q}$
+
+\textbf{$AR(p)$:} $R_t = c_0 + c_1 R_{t-1} + \ldots + c_{p} R_{t-p} + \sigma z_t$
+
+
+\paragraph{Definitions:}
+
+\textbf{Stationary:} The joint distribution invariant under time translation $t \mapsto t+s$
+
+\textbf{Weakly Stationary:} First and second moments are invariant ($E[R_t] = E[R_{t+s}]$, $VAR[R_t] = VAR[R_{t+s}]$)
+
+\textbf{Sample Auto Correlation Function (ACF):} Displays the correlation between step $t$ and steps $\{t, t-1, \ldots, p-n \}$
+
+\textbf{Partial Auto Correlation Function (Partial ACF):} Displays the last lag with relevant correlation.
+
+\textbf{Annualized Statistics:}
+
+$mean = E[X] \cdot 252$, $std = \sigma \cdot \sqrt{252}$
+
+
+\subsection{Solving $AR(1)$}
+$R_t = c_0 + c_1 R_{t-1} + \sigma z_t$, $E[R_t] = \frac{c_0}{1-c_1}$, if $\mu = \frac{c_0}{1-c_1}$ and $\lambda = -c_1$, then, \\ $R_t - \mu = -\lambda(R_{t-1} - \mu) + \sigma z_t$
+
+\textbf{Variance:} $\gamma_0 = VAR[R_t] = E[(R_t - \mu)^2] = \lambda^2\gamma_0 + \sigma^2$, then $\gamma_0 = \frac{\sigma^2}{1-\lambda^2}$, $\gamma_k = \lambda ^k \gamma_0$
+
+\textbf{Covariance:} $\gamma_k =E[(R_t - \mu)(R_{t-k} - \mu)] = (-\lambda)^k \gamma_0 = \frac{(-\lambda)^k}{1-\lambda^2}\sigma^2$
+
+\subsection{MA Example}
+$r_t = \epsilon_t + a \epsilon_{t-1} + b$, $Cov(r_t, r_{t-k} = E[(\epsilon_t + a\epsilon_{t-1})(\epsilon_{t-k} + a\epsilon_{t-k-1})]) = \{\sigma^2(1+a^2) \text{ if } k=0, a\sigma^2 \text{ if }  k=1, 0 \text{ if }  k\geq2\}$
+
+\subsection{Variance Ratio}
+$VR(q) = \frac{Var(r_t^q)}{q Var(r_t)}$
+
+\section{Binomial Tree}
+
+$S_{t+1} =
+    \begin{cases}
+        S_t \cdot u & \text{with prob. } p \\
+        S_t \cdot d, & \text{with prob} 1-p \\
+    \end{cases}$
+
+$P(S_t = S_0u^kd^{y-k}) = \binom{t}{k} p^k (1-p)^{t-k}$
+\subsection{Solving Binomial trees}
+
+$S_t = S_{t-1} e^{r_t}$, $r_t = a+b\cdot x_{t}$
+$x_{t} =
+    \begin{cases}
+        1  & \text{with prob. } p \\
+        0 , & \text{with prob. } 1-p \\
+    \end{cases}$, then
+
+$a=\mu - \sigma \sqrt{\frac{p}{1-p}}$, $b=\frac{\sigma}{\sqrt{p(1-p)}}$
+
+$log(u) = \mu + \sigma \sqrt{\frac{1-p}{p}}$, $log(d) = \mu - \sigma \sqrt{\frac{p}{1-p}}$
+
+\section{Gambler's Ruin}
+$x:$ Starting Capital, $a:$ House Capital, $Q_x:$ Probability of ruin.
+
+$Q_x = pQ_{x+1} + qQ_{x-1}$
+
+$Q_x =
+    \begin{cases}
+        \frac{(q/p)^a - (q/p)^x }{ (q/p)^a -1 }  & \text{if } p\neq q \\
+        1 - \frac{x}{a} , & \text{if } p = q
+    \end{cases}$
+
+\paragraph{If $a = + \infty$:}
+$Q_x =
+    \begin{cases}
+        1  & \text{if } p \leq q \\
+        (q/p)^x , & \text{if } p > q 
+    \end{cases}$
+\paragraph{Expected Duration:} \mbox{}\\ $Q_x =
+    \begin{cases}
+        \frac{x}{q-p} - \frac{a}{q-p} \frac{1- (q/p)^x}{1-(q/p)^a} & \text{if } p \neq q \\
+        x (a-x)  & \text{if } p = q
+    \end{cases}$
+
+\section{Mean-Squared Forecast Error (MSFE)}
+$f_{t,h} = E[X_{t+h} \mid I_t]$, $f'_{t,1} = E[\Delta X_{t+1} \mid I_t]$
+
+\textbf{MSFE:}
+
+$E[(X_{t+h} - f_{t,h})^2]$, $E[(\Delta X_{t+1} - f'_{t,1})^2]$

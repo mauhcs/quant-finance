@@ -1,0 +1,49 @@
+\section{Basics}
+\textbf{Change of Variables}
+$p(x)dx = g(y)dy \Rightarrow g(y) = \frac{p(x)}{|dy/dx)|}$
+\subsection{Moments}
+
+\textbf{Variance:} \\$\sigma^2 = E[(X-\mu)^2] = E[X^2] - E[X]^2$
+
+\textbf{Skewness:} $S = E[(X-\mu)^3]/\sigma^3 $
+
+\textbf{Kurtosis:} $\kappa = E[(X-\mu)^4]/\sigma^4 -3$
+
+\textbf{in General:} \\ $\operatorname {E} \left[(X-\mu )^{p}\right]={\begin{cases}0&{\text{if }}p{\text{ is odd,}}\\\sigma ^{p}(p-1)!!&{\text{if }}p{\text{ is even.}}\end{cases}}$
+
+\textbf{Covariance:} $Cov(X,Y) = \\E[(X-\mu_X)(Y-\mu_Y)] = E[XY] - \mu_X\mu_Y$
+
+\subsection{Distributions}
+
+\textbf{Uniform:} $\mu = 1/2, \sigma^2 = 1/12$
+
+\textbf{Binomial:} $p(k; n,p) = \frac{n!}{k!(n-k)!}p^kq^{n-k}$
+
+\textbf{Normal:} \\$p(x) = \frac{1}{\sqrt{2\pi \sigma^2}}exp(-(X-\mu)/(2\sigma^2))$
+
+\textbf{Normal (CDF):} $\frac{1}{\sqrt{2\pi}} \int_{-\infty}^z e^{t/2}dt = \Phi(\frac{x-\mu}{\sigma})$
+
+\textbf{LogNormal:} $x=log(y)$, then \\
+$p(y) = \frac{p(x)}{|dy/dx|} = \frac{1}{y\sqrt{2\pi \sigma^2}} exp(-\frac{(log(y)-\mu )^2)}{2\sigma^2}$ \\
+
+$E[R] = E[e^R -1] = e^{\mu + \frac{\sigma^2}{2}}$ \\
+$Var[R] = E[(R - \mu_R)^2] = e^{2\mu +\sigma^2}(e^{\sigma^2} -1)$ \\
+
+\textbf{Poisson:} $p(k;\lambda) = \frac{e^{-\lambda}\lambda^k}{k!}$\\
+$\mu = \lambda$, $\sigma^2 = \lambda$
+
+\subsection{Multiple Random Variables}
+
+$S= X_1 + \ldots + X_n$ \\
+$E[S] = \sum E[X_i]$ \\
+$VAR[S] = \sum_{i,j} w_i w_j E[(X_i - \mu_i)(X_ - \mu_j)]$
+
+\subsection{Results}
+
+\paragraph{Law of Large Numbers:}
+(Binomial example) As $n$ increases, the probability that the mean deviates from $np$ goes to zero.
+
+\paragraph{Central Limit Theorem (CLT)}
+(Binomial example) As $n$ increases for fixed $p$, the distribution approaches a Gaussian.
+
+\paragraph{Waiting Time}: $T:$ Number of tosses until $H$. $E[T] = 1/p$, $p$: probability of $H$

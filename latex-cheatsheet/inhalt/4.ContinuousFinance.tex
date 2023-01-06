@@ -1,0 +1,148 @@
+\section{Continuous Finance}
+
+\subsection{A few Special Functions}
+
+$f_1(S) = max(S-k, 0) = \frac{1}{2}(|S-K| + S - K)$
+
+$\dd{}{S}f_1(S) \doteq \theta(S-K) = \begin{cases} 1 \text{ if } S>K, \\ 0 \text{ if } S\leq K\end{cases}$
+
+$\ddn{}{S}{2}f_1(S) \doteq \delta(S-K) = \begin{cases} 0 \text{ if } S\neq K, \\ \infty \text{ if } S = K\end{cases}$
+
+\textbf{Dirac delta Functional}
+
+$\delta(x) = \lim \limits_{t\to 0} \frac{1}{\sqrt{2\pi t}e^{-x^2/2t}} = \begin{cases} 0 \text{ if } x\neq 0, \\ \infty \text{ if } x = 0\end{cases}$
+
+$\int_{-\infty}^{\infty}\delta(x)dx = 1$
+
+$\int_{-\infty}^{\infty}\delta(x)f(x)dx = f(0)$
+
+$\int_{-\infty}^{\infty}\delta(x-y)f(x)dx = f(y)$
+
+\section{Survival Probabilities (no drift)}
+Probability to arrive without crossing $z^*$, obeys boundary condition $p_s(z^*,t)=0$
+
+$p_s(z,t) = \begin{cases} 
+    \frac{(e^{-(z-z_0)^2/2t} - e^{-(z+z_0-2z^*)^2/2t})}{\sqrt{2\pi t}} \text{ } z > z^*, \\ 
+    0 \text{ if } z \leq z^* = 0
+\end{cases}$
+
+\subsection{Survival example:}
+
+$z = $ firm value $= D + E$, $z^* =$ firm debt $= D$, $z_0 = $ firm current value, $z_0 > z^*$
+
+\section{Stock Price Diffusion}
+
+
+If $dS = \mu S dt + \sigma S dB$, then the probability $p(S_T,T;S,t)$ satisfies: 
+
+$\dd{p}{t} + \frac{(\sigma S)^2}{2}\ddn{p}{S}{2} + \mu S \dd{p}{S} = 0$
+
+$E[f(S_T)] = \int p(S_T,T;S,t) f(S_T)dS_T = F(S,t)$, and 
+
+$\lim \limits_{t \to T} F(S,t) = \int \delta(S_T - S) f(S_T)dS_T = f(S)$
+
+$V(S,t) = e^{-r(T-t)}F(S,t) = e^{-r(T-t)}E_{t}[f(S_T)]=e^{-r(T-t)}E[V(S_T,T)]$
+
+\section{Black-Scholes Solutions}
+
+\subsection{Vanilla Call option}
+
+$V(S,t) = \int p(S_T,T;S,t) V(S_T,T)dS_T = \frac{e^{-r(T-t)}}{\sqrt{2 \pi \sigma^2 (T-t)}} \int e^{-(x-w)^2/(2\sigma^2(T-t))}f(w)dw$, where $f(w) = g(S') = max(S' - K, 0)$ for a vanilla call option with strike $K$ and expiration $T$. So,
+
+$V(S,t) = \\\frac{e^{-r(T-t)}}{\sqrt{2 \pi \sigma^2 (T-t)}} \int_{w=log K}^{\infty} e^{\frac{-(S-w)^2}{2\sigma^2(T-t)} }(e^w - K )dw = S \Phi(d_+) - Ke^{-r(T-t)}\Phi(d_-)$
+
+
+$d_{\pm} \doteq \frac{log(S/Ke^{-r(T-t)})}{\sigma\sqrt{T-t}} \pm \frac{1}{2}\sigma\sqrt{T-t}$
+
+\subsection{Binary Call Option}
+
+$f(x') = g(S') = \theta(S' - K ) = \begin{cases} 1, S' \geq K\\ 0, S' < K\end{cases}$
+
+$V(S,t) = e^{-r(T-t)}\Phi(d_-)$
+
+
+\subsection{Power Option}
+
+$S: X_T = S_T^2$, $log X = 2 log S$, \\ $d(log X) = 2 d (log S)$, 
+
+$S_t = S^2_0 e^{2 [ (\mu - \sigma^2/2)t + \sigma \sqrt{t}Z]}$
+
+$E^Q[X_T] = S_0^2 e^{2(r - \sigma^2/2)T}e^{2\sigma^2T}$
+
+$V = S_0^2 e^{rT + \sigma^2 T}$
+
+Using the risk-neutral measure ($Q$) and the moment-generating function for gaussian:
+
+$Y \sim N(\mu, \sigma^2) \Rightarrow \\f(\lambda) = E[e^{\lambda Y}] = e^{\lambda \mu + \lambda^2\sigma^2/2}$
+
+\subsection{American Perpetual Put}
+
+Put option that never expires, so it satisfies: 
+
+$\frac{(\sigma S)^2}{2} \ddn{V}{S}{2} + rs \dd{V}{S} - rV = 0$
+
+Trying a power-law solution of the form: $V(S) = S^\alpha$, then $V(S) = cS^{-2r/\sigma2}$. 
+
+If $\hat S$ is price when exercised, \\$V(\hat S) = K - \hat S \Rightarrow V(S) = (K-\hat S)(\frac{S}{\hat S})^{-2r/\sigma^2}$
+
+$\dd{V}{\hat S} |_{S = \hat S}=0 \Rightarrow \hat S = \frac{K}{1+\sigma^2/2r}$
+
+$V(S) = \frac{K\sigma^2/2r}{1+\sigma^2/2r}(\frac{S}{K}(1+\sigma^2/2r))^{-2r/\sigma2}$
+\section{The Greeks}
+
+\textbf{Delta} 
+
+$\Delta \doteq \partial V / \partial S = \begin{cases} \Phi(d_+), \text{ if call} \\ \Phi(-d_+) = \Delta_{\text{call}} -1 \text{ if put }\end{cases}$
+
+\textbf{Gamma} 
+
+$\Gamma \doteq \partial^2 V / \partial S^2 = \frac{\Phi'(d_+)}{\sigma S \sqrt{T-t}}$
+
+\textbf{Vega}
+
+$\nu \doteq \partial V / \partial \sigma = \Phi'(d_+)S\sqrt{T-t}$
+
+\section{Martingales}
+
+\textbf{Martingale:} An Ito process is martingale iff it has zero drift 
+
+(i.e., $dX_t = a\cdot dt + b \cdot dB_t \Rightarrow a=0$)
+
+$F = e^{-rt}X$ is martingale iff $a = r$.
+
+\section{Risk-neutral Pricing}
+$E^Q_t[\frac{dS_t}{S_t}] = r\cdot dt$
+
+Measure $Q$:
+
+$\frac{dS_t}{S_t} = rdt + (\mu - r)dt + \sigma dB = rdt + \sigma dB^Q$, where $dB^Q = \frac{\mu -r}{\sigma}dt + dB$. Then new differential is martingale:
+$E^Q_t[dB^Q] = 0$, $Var[dB^Q] = dt$
+
+\section{Monte Carlo Pricing}
+
+$V_t = E^Q_t[\frac{V_T}{\beta_T/\beta_t}] \begin{cases}
+    E[\cdot] \text{ Sum over paths, equal weights} \\
+    Q \text{ Use } r \text{ in evolution}\\
+    V_T \text{ Terminal value path}\\
+    \beta_T/\beta_t \text{ Discounting } e^{\int_t^T r(s)ds}
+\end{cases}$
+
+
+\section{Ito Processes in higher Dimensions}
+
+$dX_i = a_i(t, X_i, \ldots)dt + b_i(t, X_1, X_2, ...)dB_i $
+
+$dF = \\ \dd{F}{t}dt + \sum \dd{F}{X_i}dX_i + \frac{1}{2}\sum \rho_{ij}b_ib_j\frac{\partial^2 F}{\partial X_i \partial X_j}dt$
+
+\textbf{Rule of thumb:}
+
+$(dB_i)^2 \to dt$, $(dB_i)(dB_j) \to \rho_{ij}dt$
+
+$(dX_i)^2 \to b_i^2 dt$, $(dX_i)(dX_j) \to \rho_{ij}b_ib_j dt$
+
+\subsection{Examples}
+
+\textbf{1.} $F=X_1X_2$, $dF/F = dX_1/X_1 + dX_2/X_2 + (dX_1/X_1)(dX_2/X_2)$
+
+\textbf{2.} $dX_i/X_i = \mu_i dt + \sigma_i dB_i$, $dF/F = (\mu_1 + \mu_2 + \rho_{12}\sigma_1\sigma_2)dt + \sigma_1 dB_1 + \sigma_2 dB_2$
+

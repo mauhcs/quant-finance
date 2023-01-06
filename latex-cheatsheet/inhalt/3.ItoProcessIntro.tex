@@ -1,0 +1,176 @@
+\section{Ito Calculus - Intro}
+\subsection{Scaling Random Walk}
+
+$\Delta t = T/n$, $\lambda = \sqrt{\Delta t} = \sqrt{T/n}$, $\epsilon_t = \lambda z_t$
+
+$B_{\Delta t, T} = \sum_{t=1}^n \epsilon_t = \sqrt{\Delta t} \sum_{t=1}^n z_t$
+
+$E[B_{\Delta t, T}] = 0$, \\$Var[B_{\Delta t, T}] = n Var[\epsilon_t] = n\Delta t Var_{z_t} = T$
+
+$\lim\limits_{\Delta t \to 0}B_{\Delta t, T} \sim N(0, T)$
+
+$X(y_1, t_2) = B(t_2) - B(t_1)$, $X \sim N(0, t_2 - t_1)$
+
+$dB_t \sim N(0, dt)$\\
+$Cov(dB_t, dB_{t'}) =
+    \begin{cases}
+        0 & \text{if } t \neq t' \\
+        dt & \text{if } t = t'
+\end{cases}$
+
+$B(T) = B(0) + \underbrace{\int_0^T dB_T}_\text{Random Variable}$
+
+\textbf{Example:}
+
+$log(\frac{S_T}{S_0})=  \mu T + \sigma \int dB_T \sim N(\mu T, \sigma^2 T)$
+
+\textbf{More Generally:}
+
+$log(\frac{S_{t_2}}{S_{t_1}})=  \int_{t_1}^{t_2}\mu(t) dt + \int_{t_1}^{t_2}\sigma^2 dB_T $
+
+
+\section{Ito Process}
+
+$dX_t = a dt + b dB_t$
+
+$dF = \frac{\partial F}{\partial t} dt + \frac{\partial F}{\partial X}dX + \frac{b^2}{2} \frac{\partial^2 F}{\partial X^2}dt$
+
+\section{Moments of Truth}
+
+$E[dB_t] = 0$, $E[(dB_t)^2] = dt$, \\$E[(dB_t)^3]=0, E[(dB_t)^4] = 3 (dt)^2$
+
+So, for Ito's lemma: $E[dx] = a dt$, $E[dx^2] = a^2 (dt)^2 + b^2 dt, Var[dx_t^2] = b^2 dt, \\ Var[dx_t^2] = 2b^4(dt)^2 + O(dt^3)$
+
+\subsection{Expectation of Brownian Motion}
+
+$E[e^{\alpha Z + \beta}] = e^{\alpha^2/2 + \beta}$
+
+Example: $E[e^B] = e^{t/2}$. 
+
+Note that $dX = \mu dt + \sigma dB$, then \\$X_t - X_0 = \mu t + \sigma \sqrt{t}Z$. 
+
+Hence $E[e^{X}] = E[e^{\mu t + \sigma \sqrt{t} Z}] = e^{t (\sigma^2/2 + \mu)}$
+
+\subsection{Ito's Lemma Example}
+
+$dS/S = \mu dt + \sigma dB$, then \\ $dF = d(log S) = [\mu - \sigma^2/2]dt + \sigma dB$
+
+
+\textbf{Generalized random Walk}
+
+$dX = \mu dt + \sigma dB$
+
+$X_{t_2} - X_{t_1} \sim N (\mu (t_2 - t_1), \sigma^2 (t_2 - t_1))$
+
+$dX = a(t)dt + b(t)dB$ \\ $X_{t_2}- X_{t_1} \sim N(\int_{t_1}^{t_2}a(t)dt, \int_{t_1}^{t_2}b(t)^2 dt)$
+
+\subsection{Ito Process Examples}
+
+\textbf{Brownian Motion with drift}
+
+$dS_T = \mu dt + \sigma dB_t$, $S_T = S_0 + \mu T \sigma (B_T - B_0)$
+
+\textbf{Geometric Brownian Motion}
+
+$dS_T = \mu S dt + \sigma S dB_t$, \\ $S_T = S_0 \cdot e^{(\mu - \sigma^2/2)T + \sigma(B_t - B_0)}$
+
+\textbf{Ornstein-Uhlenbeck (0-U)}
+
+$dS_T = \lambda(\mu - S_t - )dt + \sigma dB_t $
+
+\textbf{Cox-Ingersoll-Ross (CIR)}
+
+$d\rho_T = \lambda(\mu - \rho_t - )dt + \sigma\sqrt{\rho} dB_t $
+
+$F = \sqrt{\rho}$, $\frac{\partial F}{\partial \rho} = \frac{1}{2\sqrt{\rho}}$, $\frac{\partial^2 F}{\partial \rho^2} = -\frac{1}{4}\rho^{-3/2}$
+
+$dF = (\frac{4\lambda \mu - \sigma^2}{3F} -\frac{1}{2}\lambda F)dt + \frac{1}{2}\sigma dB_t$
+
+\section{Black-Scholes}
+
+$\frac{\partial V}{dt} + r S \frac{\partial V}{\partial S} + \frac{(\sigma S)^2}{2}\frac{\partial^2 V}{\partial S^2} - rV = 0 $
+
+
+\section{Interest Rates}
+
+\textbf{Short rate}
+
+$V = V(t, T, y_t)$, $dy_t = a \cdot dt + b \cdot  dB$
+
+\subsection{Bond Pricing}
+
+$f(t,y) = (\frac{\partial V_i}{\partial t} + \frac{b^2}{2}\frac{\partial^2 V_i}{\partial y^2} -yV_i  )/\frac{\partial V_i}{\partial y}$
+
+$\frac{\partial V_i}{\partial t} + \frac{b^2}{2} \frac{\partial^2 V_i}{\partial y^2} - yV_i -f(t,y)\frac{\partial V_i}{\partial y} = 0$, $V_i(T,y) = 1$
+
+\textbf{Risk Premium}
+
+$dV = ( \dd{V}{t} + \frac{b^2}{2}\ddn{V}{y}{2} )dt + \dd{V}{y} dy =$ \\ $ = [ (yV + f(t,y)\dd{V}{y}) + a \dd{v}{y} ]dt + [b \dd{V}{y}]dB$
+
+\textbf{Market price of risk:} ($dt$ coefficient) $\frac{dV - yV dt}{b \dd{V}{y}} = [\frac{a+f}{b}]dt + dB$
+
+$\eta = \frac{a+f}{b}$, $f = b\eta -a $
+
+\subsection{Interest Rate Models}
+
+\textbf{Ho \& Lee:} $dy = \psi (t) dt + \sigma dB$
+
+$\psi(t) = - \ddn{}{t}{2}log(V_{mkt}(t_0, t) + \sigma^2 (t-t_0)$
+
+\textbf{Vasicek:} $dy = \alpha (\bar y - y)dt + \sigma dB$
+
+\textbf{Hull \& White:} $dy = \alpha (\bar y - y + \psi(t))dt \sigma dB$
+
+\textbf{Cox-Ingersoll-Ross:} \\$dy = \alpha (\bar y - y)dt + \sigma \sqrt{y}dB$
+
+\subsection{Pure Diffusion not good for rates:}
+
+$dy = \alpha (\bar y - y) dt + \sigma dB$
+
+$y = e^{-\alpha t} z$, $dy = -\alpha y dt + e^{-\alpha t}dz =\\ \alpha (\bar y - y) dt + \sigma dB$
+
+$\Rightarrow dz = e^{\alpha t}[(\alpha \bar y)dt + \sigma dB]$
+
+$z(t) - z_0 = \bar y (e^{\alpha t} - 1) + \sigma \int_0^t e^{\alpha s}dB_s$
+
+$y(t) = y_0e^{-\alpha t} + \bar y (1-e^{-\alpha t}) + \sigma e^{-\alpha t}\int_0^t e^{\alpha s}dB_s$
+
+$E[y(t)] = y_0 + (\bar y - y_0)(1-e^{-\alpha t})$, \\$Var[y(t)] = \frac{\sigma^2}{2\alpha}(1-e^{-2 \alpha t} \to \frac{\sigma^2}{2 \alpha})$
+
+\subsection{Bond Pricing}
+$\dd{V}{t} + \frac{\sigma^2}{2}\ddn{V}{y}{2} - yV + \alpha(\bar y - y )\dd{V}{y} = 0$, 
+Try a solution of the form: $V(t, y) = e^{f(t) - yg(t)}$
+
+\section{Solving PDEs}
+
+$\dd{p_0}{t} = \ddn{p_0}{z}{2}$, $p_0 = \frac{1}{\sqrt{2\pi t}} e^{-z^2/2t}$
+
+\textbf{Gaussian is solution to any derivative with final payoff:}
+
+$V(S_t) = \int p(S_T, T; S, t) V (S_T, T) dS_T$
+
+\textbf{From Black-Scholes to Diffusion:}
+
+$V(S,t) = e^{-r (T-t)} U(S,t) \Rightarrow \\ \Rightarrow \dd{U}{t} + \frac{(\sigma S)^2}{2} \ddn{U}{S}{2} + rS\dd{U}{S} = 0$
+
+With $\tau \doteq T -t$, $\xi \doteq S$, $S = e^{\xi}$, \\$\xi \in [-\infty, \infty] \Rightarrow $ \\ $\Rightarrow \dd{U}{\tau} - \frac{\sigma^2}{2}\ddn{U}{\xi}{2} - (r-\frac{\sigma^2}{2} \dd{U}{\xi}) = 0$ 
+
+Finally, \\$x \doteq \xi (r - \sigma^2/2)\tau = log(S) + (r-\sigma^2/2)\tau \Rightarrow$ \\ $ \Rightarrow \dd{U}{\tau} - \frac{\sigma^2}{2}\ddn{U}{x}{2} = 0$
+
+\textbf{A Special Solution:}
+
+$U(x, \tau) = \frac{1}{\sqrt{2\pi \sigma^2\tau}} e^{-x^2/(2\sigma^2\tau)}$
+
+\textbf{General Solution:}
+If $p(z, t=0) = f(z)$, then
+$p(z,t) = \int p(z-w, t)f(w)dw = \\ = \frac{1}{\sqrt{2\pi t}}\int e^{- (z-w)^2/2t}f(w)dw $
+
+\textbf{Examples:}
+
+if $p(z,0) = z^3$, then \\
+$p(z,t) = \frac{1}{\sqrt{2\pi t}}\int e^{- (z-w)^2/2t}w^3dw $. With $u = \frac{w-z}{\sqrt{t}} $ and, $du = dw/t$, then $p(z,t) = \frac{1}{\sqrt{2\pi t}}\int e^{- u^2/2}(z + \sqrt{t}u)^3dw = z^3 + zt$, i.e., $\frac{1}{\sqrt{2}}\int e^{-u/2}u^n du = E[(X-\mu)^n]$
+
+
+
+
+

@@ -1,0 +1,93 @@
+\section{Optimization}
+
+\subsection{Taylor's Theorem}
+
+$f(\pmb{x}) = f(\pmb{x_0}) + (\nabla f)^{\top}(\pmb{x-x_0}) +\frac{1}{2}(\pmb{x - x_0})Q(\pmb{x -x_0})+\ldots$
+
+where $\nabla f = \begin{pmatrix}
+    \dd{f}{x_1}\\
+    \dd{f}{x_2}\\
+    \vdots\\
+\end{pmatrix}$, and
+
+$Q=\begin{pmatrix}
+    \ddn{f}{x_1}{2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} & \ldots\\
+    \frac{\partial^2 f}{\partial x_2 \partial x_1} & \ddn{f}{x_2}{2} & \ldots\\
+    \vdots & & \ddots\\
+\end{pmatrix} = Q^{\top}$ 
+
+so that $f(\pmb{x}) - f(\pmb{x_0}) \approx \frac{1}{2}(\pmb{x -x_0})^{\top}Q(\pmb{x-x_0})$
+
+\subsection{Critical points}
+\begin{itemize}
+    \item if $Q$'s \textbf{eigenvalues} are all \textbf{positive}, the function is convex up and the critical point is \textbf{minimum}.
+    \item if $Q$'s \textbf{eigenvalues} are all \textbf{negative}, the function is concave and the critical point is \textbf{maximum}.
+    \item If $Q$ has both positive and negative eigenvalues, then there are \textbf{saddle points}, which are both maximum and minimum, along different directions.
+    \item If any eigenvalues are zero, there are \textbf{flat directions}.
+    \item The \textbf{eigenvectors} determine the axes of orientation.
+\end{itemize}
+
+\section{Lagrange Multipliers}
+
+\textbf{Lagrange function:} $L(x,y,\lambda) \doteq h(x,y) - \lambda \cdot (g(x,y) - c)$
+
+Extrema occur when \textbf{all partial derivatives} of L vanish.
+
+$\dd{L}{x} = \dd{L}{y} = \dd{L}{\lambda} = 0 \iff \nabla h \propto \nabla g$
+
+\textbf{Ex:} $h(x,y) = x+y,\\ g(x,y)=x^2 + y^2 = r^2, \\ L(x,y,\lambda) = x + y - \lambda(x^2+y^2-r^2)$
+
+$\dd{L}{x} = \dd{L}{y} = \dd{L}{\lambda} = 0 \Rightarrow \\ x=1/(2\lambda), y=x, x=y=\pm r/\sqrt{2}.$
+
+$h_{max} = \sqrt{2}r, h_{min} = -\sqrt{2}r$
+
+\section{Portfolio Optimization}
+
+Return/Risk: $\mu_P = \mu^\top \pmb{w}$, $\sigma^2_P = \pmb{w}^\top C \pmb{w}$.
+
+Budget Constraint: $\sum_{i \in P} w_i = 1$
+
+
+\subsection{Minimum-variance portfolio}:
+
+$\mathcal{L}(\pmb{w}, \mathcal{\ell}) = \frac{1}{2}\pmb{w}^\top C \pmb{w} + \ell(1-\iota^\top\pmb{w})$
+
+$\begin{cases}
+    C & \text{ covariance matrix} \\
+    \iota & \text{ unit exposure vector}, \iota = (1\text{ } 1 \text{ } \ldots) \\
+    \ell & \text{ Lagrange Multiplier} \\
+\end{cases}$
+
+Solution satisfies $\dd{\mathcal{L}}{w_i} = \dd{\mathcal{L}}{\ell} = 0.$
+
+1. $\dd{\mathcal{L}}{w_i} = \sum_j C_{ij}w_j - \ell\iota_i = 0$
+
+2. $\pmb{w} = \ell C^{-1}\iota$; 3. $\iota^\top \pmb{w} = \ell(\iota^\top C^{-1}\iota) = 1$
+
+4. Solution is: $\pmb{w}_{min} = \ell C^{-1}\iota = \frac{C^{-1}\iota}{\iota^\top C^{-1}\iota}$
+
+$\sigma_{min}^2 = \ell = 1/(\iota^\top C^{-1} \iota)$
+
+
+
+
+\subsection{Risk \& Return:}
+
+$\mathcal{L}(\pmb{w}, \ell, m) = \frac{1}{2}\pmb{w}^\top C \pmb{w} + \underbrace{\ell(1-\iota^{\top}\pmb{w})}_{\text{Budget constraint}} +  \underbrace{m(\mu_p -\mu^\top\pmb{w})}_{\text{Return Constraint}}$ 
+
+-Vary the weights $\dd{\mathcal{L}}{w_i}= \sum_i C_{ij}w_j - \ell\iota_i - m \mu_i = 0$, hence $\pmb{w} = C^{-1}(\ell\iota +m\mu)$.
+
+
+$\begin{cases}\iota^\top \pmb{w} = \ell(\iota^\top C^{-1}\iota) + m(\mu^\top C ^{-1}\iota)= 1\\ \mu^\top \pmb{w} = \ell(\mu^\top C^{-1}\iota) + m(\mu^\top C ^{-1}\mu)= \mu_p
+\end{cases}$
+
+
+$\Rightarrow M^{-1} \begin{pmatrix} 1 \\ \mu_P\end{pmatrix} = \begin{pmatrix} \ell \\ m \end{pmatrix}$, $M = \begin{pmatrix} a & b \\ b & c\end{pmatrix}$, where $a\doteq \iota^\top C^{-1} \iota, b\doteq \mu^\top C^{-1} \iota, c\doteq \mu^{\top} C^{-1}\mu $
+
+$\sigma^2_P = \pmb{w}^\top C \pmb{w} = \begin{pmatrix} \ell & m\end{pmatrix} M \begin{pmatrix} \ell \\ m\end{pmatrix}$, i.e., 
+
+$\sigma^2_P = \frac{1}{ac - b^2}(a \mu_P^2 -2b\mu_P + c)$
+
+
+
+

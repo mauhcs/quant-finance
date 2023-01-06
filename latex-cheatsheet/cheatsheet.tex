@@ -1,0 +1,42 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[LY1,T1]{fontenc}
+%\usepackage{frutigernext}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=1mm,bottom=5mm,left=1mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{pdfpages}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows,cd,positioning}
+\usetikzlibrary{babel} % needed for labels if using babel for other languages
+
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ddn}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+
+\let\bar\overline
+
+\include{inhalt/0.def}
+
+\begin{document}
+%\footnotesize
+\small
+\begin{multicols*}{5}
+\input{inhalt/1.basics}
+\input{inhalt/2.TimeSeriesIntro}
+\input{inhalt/3.ItoProcessIntro}
+\input{inhalt/4.ContinuousFinance}
+\input{inhalt/5.LinAlgebraAssetPrice} 
+\input{inhalt/6.Optimization}
+%\input{inhalt/graphalgo}
+%\input{inhalt/bool}
+%\input{inhalt/formeln}
+\end{multicols*}
+\end{document}
